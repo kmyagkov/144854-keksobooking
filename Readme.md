@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Кирилл Мягков](https://up.htmlacademy.ru/javascript/10/user/144854).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Федотов] (https://htmlacademy.ru/profile/id247015).
 
 ---
 
