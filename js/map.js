@@ -45,7 +45,6 @@ var getSimilarAds = function (titles, types, times, features, adsCount) {
         'features': features.slice(0, getRandomInt(1, featuresLength - 1)),
         'description': '',
         'photos': []
-
       },
       'location': {
         'x': locationX,
@@ -70,6 +69,7 @@ var createPin = function (similarItem, pinWidth, pinHeight, imageWidth, imageHei
   image.alt = 'Pin';
   image.width = imageWidth;
   image.height = imageHeight;
+
   pin.appendChild(image);
 
   return pin;
@@ -98,7 +98,7 @@ var renderFeatures = function (array) {
   return fragment;
 };
 
-var createOffer = function (array, index) {
+var createOffer = function (arrayElement) {
   var dialog = document.querySelector('.dialog');
   var dialogPanel = dialog.querySelector('.dialog__panel');
   var template = document.querySelector('#lodge-template').content;
@@ -112,17 +112,17 @@ var createOffer = function (array, index) {
   var adDescription = template.querySelector('.lodge__description');
   var adAvatar = document.querySelector('.dialog__title > img');
 
-  adTitle.textContent = array[index].offer.title;
-  adAdress.textContent = array[index].offer.adress;
-  adPrice.textContent = array[index].offer.price + ' \u20BD' + ' /ночь';
-  adType.textContent = HOUSING_TYPES[array[index].offer.type];
-  adRoomGuest.textContent = 'Для ' + array[index].offer.guests + ' гостей в ' + array[index].offer.rooms + ' комнатах';
-  adCheck.textContent = 'Заезд после ' + array[index].offer.checkin + ', выезд до ' + array[index].offer.checkout;
-  adFeatures.appendChild(renderFeatures(array[index].offer.features));
-  adDescription.textContent = array[index].offer.description;
-  adAvatar.setAttribute('src', array[index].author.avatar);
+  adTitle.textContent = arrayElement.offer.title;
+  adAdress.textContent = arrayElement.offer.adress;
+  adPrice.textContent = arrayElement.offer.price + ' \u20BD' + ' /ночь';
+  adType.textContent = HOUSING_TYPES[arrayElement.offer.type];
+  adRoomGuest.textContent = 'Для ' + arrayElement.offer.guests + ' гостей в ' + arrayElement.offer.rooms + ' комнатах';
+  adCheck.textContent = 'Заезд после ' + arrayElement.offer.checkin + ', выезд до ' + arrayElement.offer.checkout;
+  adFeatures.appendChild(renderFeatures(arrayElement.offer.features));
+  adDescription.textContent = arrayElement.offer.description;
+  adAvatar.setAttribute('src', arrayElement.author.avatar);
 
   dialog.replaceChild(template, dialogPanel);
 };
 
-createOffer(similarAds, 1);
+createOffer(similarAds[0]);
