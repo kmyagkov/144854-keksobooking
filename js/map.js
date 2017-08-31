@@ -3,7 +3,8 @@
 var HOUSING_TYPES = {
   'flat': 'Квартира',
   'house': 'Дом',
-  'bungalo': 'Бунгало'
+  'bungalo': 'Бунгало',
+  'palace': 'Дворец'
 };
 var CHECK_TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES_ITEMS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -184,4 +185,85 @@ document.addEventListener('keydown', function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     dialogClose();
   }
+});
+
+var adForm = document.querySelector('.notice__form');
+var timeIn = adForm.querySelector('#timein');
+var timeOut = adForm.querySelector('#timeout');
+var houseType = adForm.querySelector('#type');
+var price = adForm.querySelector('#price');
+var guestCount = adForm.querySelector('#capacity');
+var roomsCount = adForm.querySelector('#room_number');
+
+var changeTimeOut = function (evt) {
+  timeOut.value = evt.target.value;
+};
+
+var changeMinPrice = function (evt) {
+  if (evt.target.value === 'bungalo') {
+    price.setAttribute('min', '0');
+    price.value = 0;
+  } else if (evt.target.value === 'flat') {
+    price.setAttribute('min', '1000');
+    price.value = 1000;
+  } else if (evt.target.value === 'house') {
+    price.setAttribute('min', '5000');
+    price.value = 5000;
+  } else {
+    price.setAttribute('min', '10000');
+    price.value = 10000;
+  }
+};
+
+var changeGuestCount = function (evt) {
+  for (var i = 0; i < guestCount.options.length; i++) {
+    guestCount.options[i].disabled = false;
+  }
+  if (evt.target.value === '1') {
+    guestCount.value = '1';
+    for (i = 0; i < guestCount.options.length; i++) {
+      if (i === 2) {
+        continue;
+      }
+      guestCount.options[i].disabled = true;
+    }
+  } else if (evt.target.value === '2') {
+    guestCount.value = '2';
+    for (i = 0; i < guestCount.options.length; i++) {
+      if (i === 1 || i === 2) {
+        continue;
+      }
+      guestCount.options[i].disabled = true;
+    }
+  } else if (evt.target.value === '3') {
+    guestCount.value = '3';
+    for (i = 0; i < guestCount.options.length; i++) {
+      if (i !== 3) {
+        continue;
+      }
+      guestCount.options[i].disabled = true;
+    }
+  } else {
+    guestCount.value = '0';
+    for (i = 0; i < guestCount.options.length; i++) {
+      if (i === 3) {
+        continue;
+      }
+      guestCount.options[i].disabled = true;
+    }
+  }
+};
+
+var renderInvalid = function (evt) {
+  if (!evt.target.validity.valid) {
+    evt.target.style.border = '2px solid red';
+  }
+};
+
+timeIn.addEventListener('change', changeTimeOut);
+houseType.addEventListener('change', changeMinPrice);
+roomsCount.addEventListener('change', changeGuestCount);
+adForm.addEventListener('invalid', renderInvalid, true);
+adForm.addEventListener('submit', function () {
+  adForm.reset();
 });
