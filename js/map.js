@@ -11,6 +11,8 @@ var PIN_WIDTH = 50;
 var PIN_HEIGHT = 75;
 var IMAGE_WIDTH = 40;
 var IMAGE_HEIGHT = 40;
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 var similarAdsTitles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 
 var getRandomInt = function (min, max) {
@@ -57,9 +59,11 @@ var getSimilarAds = function (titles, types, times, features, adsCount) {
 
 var similarAds = getSimilarAds(similarAdsTitles, HOUSING_TYPES, CHECK_TIMES, FEATURES_ITEMS, similarAdsTitles.length);
 
-var createPin = function (similarItem, pinWidth, pinHeight, imageWidth, imageHeight) {
+var createPin = function (similarItem, pinWidth, pinHeight, imageWidth, imageHeight, index) {
   var pin = document.createElement('div');
   pin.classList.add('pin');
+  pin.setAttribute('data-id', index);
+  pin.setAttribute('tabindex', index + 2);
   pin.style.left = similarItem.location.x - pinWidth / 2 + 'px';
   pin.style.top = similarItem.location.y - pinHeight + 'px';
 
@@ -80,7 +84,7 @@ var renderPins = function (array, element) {
 
   var fragment = document.createDocumentFragment();
   for (var i = 0; i < array.length; i++) {
-    fragment.appendChild(createPin(array[i], PIN_WIDTH, PIN_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT));
+    fragment.appendChild(createPin(array[i], PIN_WIDTH, PIN_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT, i));
   }
   element.appendChild(fragment);
 };
@@ -98,18 +102,19 @@ var renderFeatures = function (array) {
   return fragment;
 };
 
+var dialog = document.querySelector('.dialog');
 var createOffer = function (arrayElement) {
-  var dialog = document.querySelector('.dialog');
   var dialogPanel = dialog.querySelector('.dialog__panel');
   var template = document.querySelector('#lodge-template').content;
-  var adTitle = template.querySelector('.lodge__title');
-  var adAdress = template.querySelector('.lodge__address');
-  var adPrice = template.querySelector('.lodge__price');
-  var adType = template.querySelector('.lodge__type');
-  var adRoomGuest = template.querySelector('.lodge__rooms-and-guests');
-  var adCheck = template.querySelector('.lodge__checkin-time');
-  var adFeatures = template.querySelector('.lodge__features');
-  var adDescription = template.querySelector('.lodge__description');
+  var offerItem = template.cloneNode(true);
+  var adTitle = offerItem.querySelector('.lodge__title');
+  var adAdress = offerItem.querySelector('.lodge__address');
+  var adPrice = offerItem.querySelector('.lodge__price');
+  var adType = offerItem.querySelector('.lodge__type');
+  var adRoomGuest = offerItem.querySelector('.lodge__rooms-and-guests');
+  var adCheck = offerItem.querySelector('.lodge__checkin-time');
+  var adFeatures = offerItem.querySelector('.lodge__features');
+  var adDescription = offerItem.querySelector('.lodge__description');
   var adAvatar = document.querySelector('.dialog__title > img');
 
   adTitle.textContent = arrayElement.offer.title;
@@ -122,7 +127,61 @@ var createOffer = function (arrayElement) {
   adDescription.textContent = arrayElement.offer.description;
   adAvatar.setAttribute('src', arrayElement.author.avatar);
 
-  dialog.replaceChild(template, dialogPanel);
+  dialog.replaceChild(offerItem, dialogPanel);
 };
 
-createOffer(similarAds[0]);
+var clickedPin = null;
+var dialogCloseBtn = dialog.querySelector('.dialog__close');
+
+var pinContainerClickHandler = function (evt) {
+  var target = evt.target;
+
+  if (target.className === 'rounded') {
+    activatePin(target.parentNode);
+  } else if (target.className === 'pin') {
+    activatePin(target);
+  }
+};
+
+var activatePin = function (node) {
+  var pinId = node.getAttribute('data-id');
+  if (clickedPin) {
+    clickedPin.classList.remove('pin--active');
+  }
+  clickedPin = node;
+  clickedPin.classList.add('pin--active');
+
+  dialog.classList.remove('hidden');
+  dialogCloseBtn.focus();
+
+  createOffer(similarAds[pinId]);
+};
+
+pinContainer.addEventListener('click', pinContainerClickHandler);
+
+pinContainer.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    pinContainerClickHandler(evt);
+  }
+});
+
+var dialogClose = function () {
+  dialog.classList.add('hidden');
+  clickedPin.classList.remove('pin--active');
+};
+
+dialogCloseBtn.addEventListener('click', function () {
+  dialogClose();
+});
+
+dialogCloseBtn.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    dialogClose();
+  }
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    dialogClose();
+  }
+});
