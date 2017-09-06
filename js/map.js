@@ -1,10 +1,28 @@
 'use strict';
 
 var HOUSING_TYPES = {
-  'flat': 'Квартира',
-  'house': 'Дом',
-  'bungalo': 'Бунгало',
-  'palace': 'Дворец'
+  'bungalo': {
+    'title': 'Лачуга',
+    'minPrice': 0
+  },
+  'flat': {
+    'title': 'Квартира',
+    'minPrice': 1000
+  },
+  'house': {
+    'title': 'Дом',
+    'minPrice': 5000
+  },
+  'palace': {
+    'title': 'Дворец',
+    'minPrice': 10000
+  }
+};
+var GUEST_ROOMS = {
+  '1': ['1'],
+  '2': ['1', '2'],
+  '3': ['1', '2', '3'],
+  '100': ['0']
 };
 var CHECK_TIMES = ['12:00', '13:00', '14:00'];
 var FEATURES_ITEMS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
@@ -121,7 +139,7 @@ var createOffer = function (arrayElement) {
   adTitle.textContent = arrayElement.offer.title;
   adAdress.textContent = arrayElement.offer.adress;
   adPrice.textContent = arrayElement.offer.price + ' \u20BD' + ' /ночь';
-  adType.textContent = HOUSING_TYPES[arrayElement.offer.type];
+  adType.textContent = HOUSING_TYPES[arrayElement.offer.type].title;
   adRoomGuest.textContent = 'Для ' + arrayElement.offer.guests + ' гостей в ' + arrayElement.offer.rooms + ' комнатах';
   adCheck.textContent = 'Заезд после ' + arrayElement.offer.checkin + ', выезд до ' + arrayElement.offer.checkout;
   adFeatures.appendChild(renderFeatures(arrayElement.offer.features));
@@ -193,6 +211,7 @@ var timeOut = adForm.querySelector('#timeout');
 var houseType = adForm.querySelector('#type');
 var price = adForm.querySelector('#price');
 var guestCount = adForm.querySelector('#capacity');
+var guestCountOptions = guestCount.querySelectorAll('option');
 var roomsCount = adForm.querySelector('#room_number');
 
 var changeTimeOut = function (evt) {
@@ -200,56 +219,15 @@ var changeTimeOut = function (evt) {
 };
 
 var changeMinPrice = function (evt) {
-  if (evt.target.value === 'bungalo') {
-    price.setAttribute('min', '0');
-    price.value = 0;
-  } else if (evt.target.value === 'flat') {
-    price.setAttribute('min', '1000');
-    price.value = 1000;
-  } else if (evt.target.value === 'house') {
-    price.setAttribute('min', '5000');
-    price.value = 5000;
-  } else {
-    price.setAttribute('min', '10000');
-    price.value = 10000;
-  }
+  price.setAttribute('min', HOUSING_TYPES[evt.target.value].minPrice);
+  price.value = HOUSING_TYPES[evt.target.value].minPrice;
 };
 
-var changeGuestCount = function (evt) {
-  for (var i = 0; i < guestCount.options.length; i++) {
-    guestCount.options[i].disabled = false;
-  }
-  if (evt.target.value === '1') {
-    guestCount.value = '1';
-    for (i = 0; i < guestCount.options.length; i++) {
-      if (i === 2) {
-        continue;
-      }
-      guestCount.options[i].disabled = true;
-    }
-  } else if (evt.target.value === '2') {
-    guestCount.value = '2';
-    for (i = 0; i < guestCount.options.length; i++) {
-      if (i === 1 || i === 2) {
-        continue;
-      }
-      guestCount.options[i].disabled = true;
-    }
-  } else if (evt.target.value === '3') {
-    guestCount.value = '3';
-    for (i = 0; i < guestCount.options.length; i++) {
-      if (i !== 3) {
-        continue;
-      }
-      guestCount.options[i].disabled = true;
-    }
-  } else {
-    guestCount.value = '0';
-    for (i = 0; i < guestCount.options.length; i++) {
-      if (i === 3) {
-        continue;
-      }
-      guestCount.options[i].disabled = true;
+var changeGuestCount = function () {
+  for (var i = 0; i < guestCountOptions.length; i++) {
+    guestCountOptions[i].disabled = !GUEST_ROOMS[roomsCount.value].includes(guestCountOptions[i].value);
+    if (!guestCountOptions[i].disabled) {
+      guestCount.value = guestCountOptions[i].value;
     }
   }
 };
@@ -260,10 +238,14 @@ var renderInvalid = function (evt) {
   }
 };
 
+var formReset = function () {
+  adForm.reset();
+};
+
 timeIn.addEventListener('change', changeTimeOut);
 houseType.addEventListener('change', changeMinPrice);
 roomsCount.addEventListener('change', changeGuestCount);
 adForm.addEventListener('invalid', renderInvalid, true);
 adForm.addEventListener('submit', function () {
-  adForm.reset();
+  setTimeout(formReset, 1000);
 });
