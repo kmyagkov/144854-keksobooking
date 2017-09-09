@@ -1,24 +1,7 @@
 'use strict';
 
 (function () {
-  var HOUSING_TYPES = {
-    'bungalo': {
-      'title': 'Лачуга',
-      'minPrice': 0
-    },
-    'flat': {
-      'title': 'Квартира',
-      'minPrice': 1000
-    },
-    'house': {
-      'title': 'Дом',
-      'minPrice': 5000
-    },
-    'palace': {
-      'title': 'Дворец',
-      'minPrice': 10000
-    }
-  };
+
   var GUEST_ROOMS = {
     '1': ['1'],
     '2': ['1', '2'],
@@ -39,8 +22,8 @@
   };
 
   var changeMinPrice = function (evt) {
-    price.setAttribute('min', HOUSING_TYPES[evt.target.value].minPrice);
-    price.value = HOUSING_TYPES[evt.target.value].minPrice;
+    price.setAttribute('min', window.data.houseTypes[evt.target.value].minPrice);
+    price.value = window.data.houseTypes[evt.target.value].minPrice;
   };
 
   var changeGuestCount = function () {

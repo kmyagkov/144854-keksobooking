@@ -60,7 +60,8 @@
   var similarAds = getSimilarAds(similarAdsTitles, HOUSING_TYPES, CHECK_TIMES, FEATURES_ITEMS, similarAdsTitles.length);
 
   window.data = {
-    getAds: similarAds
+    getAds: similarAds,
+    houseTypes: HOUSING_TYPES
   };
 
 })();

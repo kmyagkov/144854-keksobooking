@@ -13,12 +13,12 @@
       var arr = Object.keys(obj);
       return arr[window.utils.getRandomInt(0, arr.length - 1)];
     },
-    isEscEvent: function (evt, action) {
+    escEvent: function (evt, action) {
       if (evt.keyCode === ESC_KEYCODE) {
         action();
       }
     },
-    isEnterEvent: function (evt, action) {
+    enterEvent: function (evt, action) {
       if (evt.keyCode === ENTER_KEYCODE) {
         action();
       }
