@@ -2,24 +2,6 @@
 
 (function () {
 
-  var HOUSING_TYPES = {
-    'bungalo': {
-      'title': 'Лачуга',
-      'minPrice': 0
-    },
-    'flat': {
-      'title': 'Квартира',
-      'minPrice': 1000
-    },
-    'house': {
-      'title': 'Дом',
-      'minPrice': 5000
-    },
-    'palace': {
-      'title': 'Дворец',
-      'minPrice': 10000
-    }
-  };
   var renderFeatures = function (array) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < array.length; i++) {
@@ -51,7 +33,7 @@
       adTitle.textContent = arrayElement.offer.title;
       adAdress.textContent = arrayElement.offer.adress;
       adPrice.textContent = arrayElement.offer.price + ' \u20BD' + ' /ночь';
-      adType.textContent = HOUSING_TYPES[arrayElement.offer.type].title;
+      adType.textContent = window.data.houseTypes[arrayElement.offer.type].title;
       adRoomGuest.textContent = 'Для ' + arrayElement.offer.guests + ' гостей в ' + arrayElement.offer.rooms + ' комнатах';
       adCheck.textContent = 'Заезд после ' + arrayElement.offer.checkin + ', выезд до ' + arrayElement.offer.checkout;
       adFeatures.appendChild(renderFeatures(arrayElement.offer.features));

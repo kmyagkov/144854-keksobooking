@@ -2,8 +2,6 @@
 
 (function () {
 
-  // var ENTER_KEYCODE = 13;
-
   var dialog = document.querySelector('.dialog');
   var dialogCloseBtn = dialog.querySelector('.dialog__close');
   var pinContainer = document.querySelector('.tokyo__pin-map');
@@ -29,14 +27,11 @@
     window.utils.focusElement(dialogCloseBtn);
   };
 
-  //  Проблема при открытии попапа по enter. На первой метке работает, если переходить табом к следующим, просто открывается попап
-  //  для первого пина.
-
   pinContainer.addEventListener('keydown', function (evt) {
-    window.utils.isEnterEvent(evt, pinContainerClickHandler(evt));
-    //    if (evt.keyCode === ENTER_KEYCODE) {
-    //     pinContainerClickHandler(evt);
-    //   }
+    window.utils.enterEvent(evt, function () {
+      pinContainerClickHandler(evt);
+    });
+
   });
 
   pinContainer.addEventListener('click', pinContainerClickHandler);
@@ -46,10 +41,10 @@
   });
 
   dialogCloseBtn.addEventListener('keydown', function (evt) {
-    window.utils.isEnterEvent(evt, closeDialog);
+    window.utils.enterEvent(evt, closeDialog);
   });
 
   document.addEventListener('keydown', function (evt) {
-    window.utils.isEscEvent(evt, closeDialog);
+    window.utils.escEvent(evt, closeDialog);
   });
 })();
