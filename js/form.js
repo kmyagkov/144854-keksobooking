@@ -8,7 +8,9 @@
     '3': ['1', '2', '3'],
     '100': ['0']
   };
+
   var adForm = document.querySelector('.notice__form');
+  var addAdress = adForm.querySelector('#address');
   var timeIn = adForm.querySelector('#timein');
   var timeOut = adForm.querySelector('#timeout');
   var houseType = adForm.querySelector('#type');
@@ -52,5 +54,11 @@
   adForm.addEventListener('submit', function () {
     setTimeout(formReset, 1000);
   });
+
+  window.form = {
+    changeAdress: function (x, y) {
+      addAdress.value = 'x: ' + parseInt(x, 10) + ', y: ' + parseInt(y, 10);
+    }
+  };
 
 })();
