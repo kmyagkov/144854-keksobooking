@@ -8,7 +8,7 @@
     '3': ['1', '2', '3'],
     '100': ['0']
   };
-  var mainPin = document.querySelector('.pin__main');
+
   var adForm = document.querySelector('.notice__form');
   var addAdress = adForm.querySelector('#address');
   var timeIn = adForm.querySelector('#timein');
