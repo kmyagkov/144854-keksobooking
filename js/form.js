@@ -57,7 +57,7 @@
 
   window.form = {
     changeAdress: function (x, y) {
-      addAdress.value = 'x: ' + parseInt(x, 10) + ' y: ' + parseInt(y, 10);
+      addAdress.value = 'x: ' + parseInt(x, 10) + ', y: ' + parseInt(y, 10);
     }
   };
 

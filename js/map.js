@@ -70,7 +70,7 @@
     var limitDrag = function (dragValue, minLimit, maxLimit) {
       if (dragValue > minLimit && dragValue < maxLimit) {
         return dragValue;
-      } else if (dragValue < minLimit) {
+      } else if (dragValue <= minLimit) {
         return minLimit;
       } else {
         return maxLimit;
