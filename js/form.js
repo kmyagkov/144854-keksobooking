@@ -16,7 +16,6 @@
   var houseType = adForm.querySelector('#type');
   var price = adForm.querySelector('#price');
   var guestCount = adForm.querySelector('#capacity');
-  var guestCountOptions = guestCount.querySelectorAll('option');
   var roomsCount = adForm.querySelector('#room_number');
 
   var syncValues = function (elem, value) {
@@ -24,15 +23,15 @@
   };
 
   var syncValuesWithMin = function (elem, value) {
-    elem.setAttribute('min', window.data.houseTypes[value].minPrice);
-    elem.value = window.data.houseTypes[value].minPrice;
+    elem.min = value.minPrice;
+    elem.value = value.minPrice;
   };
 
   var syncValuesWithGuest = function (elem, value) {
-    for (var i = 0; i < guestCountOptions.length; i++) {
-      guestCountOptions[i].disabled = !GUEST_ROOMS[value].includes(guestCountOptions[i].value);
-      if (!guestCountOptions[i].disabled) {
-        elem.value = guestCountOptions[i].value;
+    for (var i = 0; i < elem.length; i++) {
+      elem[i].disabled = !value.includes(elem[i].value);
+      if (!elem[i].disabled) {
+        elem.value = elem[i].value;
       }
     }
   };
@@ -48,13 +47,13 @@
   };
 
   timeIn.addEventListener('change', function () {
-    window.synchronizeFields.syncFields(timeIn, timeOut, syncValues);
+    window.synchronizeFields.syncFields(timeIn, timeOut, window.data.times, window.data.times, syncValues);
   });
   houseType.addEventListener('change', function () {
-    window.synchronizeFields.syncFields(houseType, price, syncValuesWithMin);
+    window.synchronizeFields.syncFields(houseType, price, window.data.houseTypes, window.data.houseTypes, syncValuesWithMin);
   });
   roomsCount.addEventListener('change', function () {
-    window.synchronizeFields.syncFields(roomsCount, guestCount, syncValuesWithGuest);
+    window.synchronizeFields.syncFields(roomsCount, guestCount, GUEST_ROOMS, GUEST_ROOMS, syncValuesWithGuest);
   });
   adForm.addEventListener('invalid', renderInvalid, true);
   adForm.addEventListener('submit', function () {
