@@ -23,9 +23,6 @@
         action();
       }
     },
-    showElement: function (elem) {
-      elem.classList.remove('hidden');
-    },
     hideElement: function (elem) {
       elem.classList.add('hidden');
     },

@@ -61,7 +61,8 @@
 
   window.data = {
     getAds: similarAds,
-    houseTypes: HOUSING_TYPES
+    houseTypes: HOUSING_TYPES,
+    times: CHECK_TIMES
   };
 
 })();
