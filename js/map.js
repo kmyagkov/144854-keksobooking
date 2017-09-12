@@ -34,7 +34,7 @@
       window.pin.activatePin(target, clickedPin);
       clickedPin = window.pin.activatePin(target, clickedPin);
     }
-    window.utils.showElement(dialog);
+    window.showCard.showCard(dialog);
     window.utils.focusElement(dialogCloseBtn);
   };
 
