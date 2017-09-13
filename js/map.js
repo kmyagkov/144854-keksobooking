@@ -18,7 +18,33 @@
   var clickedPin = null;
   var mainPin = pinContainer.querySelector('.pin__main');
 
-  window.pin.renderPins(window.data.getAds, pinContainer);
+  var onLoad = function (ads) {
+    window.pin.renderPins(ads, pinContainer);
+    window.data.getAds = ads;
+  };
+
+  var onError = function (error) {
+    var element = document.createElement('div');
+
+    element.style.position = 'absolute';
+    element.style.top = '140px';
+    element.style.left = '50%';
+    element.style.width = '440px';
+    element.style.background = 'url(http://img2.wikia.nocookie.net/__cb20140809161659/tannericus/images/c/cd/Famous-characters-Troll-face-Bad-Poker-Face-564817.png) 20px 20px no-repeat, #ED4545';
+    element.style.backgroundSize = '50px 50px';
+    element.style.margin = 'auto';
+    element.style.padding = '20px 0 20px 30px';
+    element.style.marginLeft = '-220px';
+    element.style.textAlign = 'center';
+    element.style.borderRadius = '20px';
+    element.style.fontSize = '22px';
+    element.style.color = '#fff';
+    element.textContent = error;
+
+    pinContainer.insertAdjacentElement('afterbegin', element);
+  };
+
+  window.backend.load(onLoad, onError);
 
   var closeDialog = function () {
     window.utils.hideElement(dialog);
