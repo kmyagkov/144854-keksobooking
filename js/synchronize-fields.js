@@ -3,15 +3,15 @@
 (function () {
 
   window.synchronizeFields = {
-    syncFields: function (elem1, elem2, value1, value2, action) {
-      if (Array.isArray(value1) && Array.isArray(value2)) {
-        var elem1Value = elem1.value;
-        var elem2Value = value2[value1.indexOf(elem1Value)];
+    syncFields: function (sourceElement, targetElement, sourceElementValues, targetElementValues, action) {
+      var sourceElementValue = sourceElement.value;
+      var targetElementValue;
+      if (Array.isArray(sourceElementValues) && Array.isArray(targetElementValues)) {
+        targetElementValue = targetElementValues[sourceElementValues.indexOf(sourceElementValue)];
       } else {
-        elem1Value = elem1.value;
-        elem2Value = value2[elem1Value];
+        targetElementValue = targetElementValues[sourceElementValue];
       }
-      action(elem2, elem2Value);
+      action(targetElement, targetElementValue);
     }
   };
 })();
