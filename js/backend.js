@@ -3,7 +3,7 @@
 (function () {
 
   var GET_URL = 'https://1510.dump.academy/keksobooking/data';
-  var POST_URL = 'https://1510.dump.academy/keksobooking2';
+  var POST_URL = 'https://1510.dump.academy/keksobooking';
 
   window.backend = {
     load: function (onLoad, onError) {

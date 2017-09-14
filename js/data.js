@@ -60,7 +60,7 @@
   var similarAds = getSimilarAds(similarAdsTitles, HOUSING_TYPES, CHECK_TIMES, FEATURES_ITEMS, similarAdsTitles.length);
 
   window.data = {
-    getAds: similarAds,
+    ads: similarAds,
     houseTypes: HOUSING_TYPES,
     times: CHECK_TIMES
   };
