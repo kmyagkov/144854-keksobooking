@@ -26,6 +26,9 @@
     hideElement: function (elem) {
       elem.classList.add('hidden');
     },
+    showElement: function (elem) {
+      elem.classList.remove('hidden');
+    },
     focusElement: function (elem) {
       elem.focus();
     }

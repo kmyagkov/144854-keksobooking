@@ -20,7 +20,15 @@
 
   var onLoad = function (ads) {
     window.pin.renderPins(ads, pinContainer);
-    window.data.getAds = ads;
+    window.data.ads = ads;
+    window.data.ads.forEach(function (it, i) {
+      it.id = i;
+    });
+
+    var pins = document.querySelectorAll('.pin:not(.pin__main)');
+    for (var i = 3; i < pins.length; i++) {
+      window.utils.hideElement(pins[i]);
+    }
   };
 
   var onError = function (error) {
@@ -29,12 +37,12 @@
     element.style.position = 'absolute';
     element.style.top = '140px';
     element.style.left = '50%';
-    element.style.width = '440px';
+    element.style.width = '540px';
     element.style.background = 'url(http://img2.wikia.nocookie.net/__cb20140809161659/tannericus/images/c/cd/Famous-characters-Troll-face-Bad-Poker-Face-564817.png) 20px 20px no-repeat, #ED4545';
     element.style.backgroundSize = '50px 50px';
     element.style.margin = 'auto';
     element.style.padding = '20px 0 20px 30px';
-    element.style.marginLeft = '-220px';
+    element.style.marginLeft = '-270px';
     element.style.textAlign = 'center';
     element.style.borderRadius = '20px';
     element.style.fontSize = '22px';
@@ -42,6 +50,24 @@
     element.textContent = error;
 
     pinContainer.insertAdjacentElement('afterbegin', element);
+
+    var closeBtn = document.createElement('span');
+    closeBtn.innerHTML = '<img src="img/close.svg" width="22" height="22">';
+    closeBtn.style.position = 'absolute';
+    closeBtn.style.top = '10px';
+    closeBtn.style.right = '10px';
+    closeBtn.style.cursor = 'pointer';
+
+    element.insertAdjacentElement('afterbegin', closeBtn);
+
+    closeBtn.addEventListener('click', function (evt) {
+      evt.stopPropagation();
+      window.utils.hideElement(element);
+    });
+
+    setTimeout(function () {
+      window.utils.hideElement(element);
+    }, 3000);
   };
 
   window.backend.load(onLoad, onError);
@@ -68,7 +94,6 @@
     window.utils.enterEvent(evt, function () {
       pinContainerClickHandler(evt);
     });
-
   });
 
   pinContainer.addEventListener('click', pinContainerClickHandler);

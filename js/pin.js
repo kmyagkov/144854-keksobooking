@@ -43,7 +43,7 @@
       activeElem = node;
       activeElem.classList.add('pin--active');
 
-      window.card.createOffer(window.data.getAds[pinId]);
+      window.card.createOffer(window.data.ads[pinId]);
 
       return activeElem;
     },
