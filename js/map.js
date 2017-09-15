@@ -19,8 +19,9 @@
   var mainPin = pinContainer.querySelector('.pin__main');
 
   var onLoad = function (ads) {
-    window.pin.renderPins(ads, pinContainer);
+    window.pin.renderPins(ads, pinContainer, 3);
     window.data.ads = ads;
+    window.data.adsFilter = ads;
   };
 
   var onError = function (error) {
@@ -86,7 +87,6 @@
     window.utils.enterEvent(evt, function () {
       pinContainerClickHandler(evt);
     });
-
   });
 
   pinContainer.addEventListener('click', pinContainerClickHandler);

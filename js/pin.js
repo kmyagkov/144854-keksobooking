@@ -28,9 +28,9 @@
   };
 
   window.pin = {
-    renderPins: function (array, element) {
+    renderPins: function (array, element, pinsCount) {
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < array.length; i++) {
+      for (var i = 0; i < pinsCount; i++) {
         fragment.appendChild(createPin(array[i], PIN_WIDTH, PIN_HEIGHT, IMAGE_WIDTH, IMAGE_HEIGHT, i));
       }
       element.appendChild(fragment);
