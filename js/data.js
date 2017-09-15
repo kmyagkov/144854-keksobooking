@@ -61,7 +61,6 @@
 
   window.data = {
     ads: similarAds,
-    adsFilter: [],
     houseTypes: HOUSING_TYPES,
     times: CHECK_TIMES
   };

@@ -19,9 +19,11 @@
   var mainPin = pinContainer.querySelector('.pin__main');
 
   var onLoad = function (ads) {
-    window.pin.renderPins(ads, pinContainer, 3);
+    window.pin.renderPins(ads, pinContainer);
     window.data.ads = ads;
-    window.data.adsFilter = ads;
+    window.data.ads.forEach(function (it, i) {
+      it.id = i;
+    });
   };
 
   var onError = function (error) {

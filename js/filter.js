@@ -2,20 +2,12 @@
 
 (function () {
 
-  var pinContainer = document.querySelector('.tokyo__pin-map');
   var filters = document.querySelector('.tokyo__filters');
   var filterType = filters.querySelector('#housing_type');
   var filterPrice = filters.querySelector('#housing_price');
   var filterRooms = filters.querySelector('#housing_room-number');
   var filterGuests = filters.querySelector('#housing_guests-number');
   var filterFeatures = filters.querySelectorAll('input[name="feature"]');
-
-  var clearPins = function () {
-    var pins = document.querySelectorAll('.pin:not(.pin__main)');
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].remove();
-    }
-  };
 
   var setFilterTypes = function (filterValue, itemValue) {
     return filterValue === 'any' || itemValue === filterValue;
@@ -71,11 +63,20 @@
     });
   };
 
+  var showFilteredPin = function (filterArray, pinCollection) {
+    for (var i = 0; i < pinCollection.length; i++) {
+      window.utils.hideElement(pinCollection[i]);
+    }
+    filterArray.forEach(function (it) {
+      window.utils.showElement(document.querySelector('div[data-id="' + it.id + '"]'));
+    });
+  };
+
   var renderFilterPins = function () {
-    window.data.ads = window.data.adsFilter;
-    clearPins();
-    window.data.ads = setFilters();
-    window.pin.renderPins(window.data.ads, pinContainer, window.data.ads.length);
+    var pins = document.querySelectorAll('.pin:not(.pin__main)');
+    var tempAds = window.data.ads.slice();
+    tempAds = setFilters();
+    showFilteredPin(tempAds, pins);
   };
 
   var onFilterChange = function (evt) {
