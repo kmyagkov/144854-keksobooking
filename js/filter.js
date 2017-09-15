@@ -36,47 +36,41 @@
     return true;
   };
 
-  var setFilters = function () {
-    var houseFeatures = [].filter.call(filterFeatures, function (item) {
-      return item.checked;
-    }).map(function (item) {
-      return item.value;
+  var checkVisibility = function (item) {
+    var houseFeatures = [].filter.call(filterFeatures, function (featureItem) {
+      return featureItem.checked;
+    }).map(function (featureItem) {
+      return featureItem.value;
     });
 
-    return window.data.ads.filter(function (item) {
-      if (!setFilterTypes(filterType.value, item.offer.type)) {
-        return false;
-      }
-      if (!setFilterPrice(item.offer.price)) {
-        return false;
-      }
-      if (!setFilterTypes(filterRooms.value, item.offer.rooms + '')) {
-        return false;
-      }
-      if (!setFilterTypes(filterGuests.value, item.offer.guests + '')) {
-        return false;
-      }
-      if (!setFilterFeatures(houseFeatures, item.offer.features)) {
-        return false;
-      }
-      return true;
-    });
-  };
-
-  var showFilteredPin = function (filterArray, pinCollection) {
-    for (var i = 0; i < pinCollection.length; i++) {
-      window.utils.hideElement(pinCollection[i]);
+    if (!setFilterTypes(filterType.value, item.offer.type)) {
+      return false;
     }
-    filterArray.forEach(function (it) {
-      window.utils.showElement(document.querySelector('div[data-id="' + it.id + '"]'));
-    });
+    if (!setFilterPrice(item.offer.price)) {
+      return false;
+    }
+    if (!setFilterTypes(filterRooms.value, item.offer.rooms + '')) {
+      return false;
+    }
+    if (!setFilterTypes(filterGuests.value, item.offer.guests + '')) {
+      return false;
+    }
+    if (!setFilterFeatures(houseFeatures, item.offer.features)) {
+      return false;
+    }
+    return true;
   };
 
   var renderFilterPins = function () {
     var pins = document.querySelectorAll('.pin:not(.pin__main)');
-    var tempAds = window.data.ads.slice();
-    tempAds = setFilters();
-    showFilteredPin(tempAds, pins);
+    window.data.ads.forEach(function (pin, i) {
+      var isVisible = checkVisibility(pin);
+      if (isVisible) {
+        window.utils.showElement(document.querySelector('div[data-id="' + pin.id + '"]'));
+      } else {
+        window.utils.hideElement(pins[i]);
+      }
+    });
   };
 
   var onFilterChange = function (evt) {
