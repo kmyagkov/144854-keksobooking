@@ -24,6 +24,11 @@
     window.data.ads.forEach(function (it, i) {
       it.id = i;
     });
+
+    var pins = document.querySelectorAll('.pin:not(.pin__main)');
+    for (var i = 3; i < pins.length; i++) {
+      window.utils.hideElement(pins[i]);
+    }
   };
 
   var onError = function (error) {

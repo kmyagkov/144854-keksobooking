@@ -13,9 +13,8 @@
     return filterValue === 'any' || itemValue === filterValue;
   };
 
-  var setFilterPrice = function (price) {
-    var currentValue = filterPrice.value;
-    switch (currentValue) {
+  var setFilterPrice = function (filterValue, price) {
+    switch (filterValue) {
       case 'middle':
         return price >= 10000 && price < 50000;
       case 'low':
@@ -43,32 +42,22 @@
       return featureItem.value;
     });
 
-    if (!setFilterTypes(filterType.value, item.offer.type)) {
-      return false;
-    }
-    if (!setFilterPrice(item.offer.price)) {
-      return false;
-    }
-    if (!setFilterTypes(filterRooms.value, item.offer.rooms + '')) {
-      return false;
-    }
-    if (!setFilterTypes(filterGuests.value, item.offer.guests + '')) {
-      return false;
-    }
-    if (!setFilterFeatures(houseFeatures, item.offer.features)) {
-      return false;
-    }
-    return true;
+    return setFilterTypes(filterType.value, item.offer.type) &&
+    setFilterTypes(filterRooms.value, item.offer.rooms) &&
+    setFilterPrice(filterPrice.value, item.offer.price) &&
+    setFilterTypes(filterRooms.value, String(item.offer.rooms)) &&
+    setFilterTypes(filterGuests.value, String(item.offer.guests)) &&
+    setFilterFeatures(houseFeatures, item.offer.features);
   };
 
   var renderFilterPins = function () {
-    var pins = document.querySelectorAll('.pin:not(.pin__main)');
-    window.data.ads.forEach(function (pin, i) {
+    window.data.ads.forEach(function (pin) {
       var isVisible = checkVisibility(pin);
+      var filteredPin = document.querySelector('div[data-id="' + pin.id + '"]');
       if (isVisible) {
-        window.utils.showElement(document.querySelector('div[data-id="' + pin.id + '"]'));
+        window.utils.showElement(filteredPin);
       } else {
-        window.utils.hideElement(pins[i]);
+        window.utils.hideElement(filteredPin);
       }
     });
   };
