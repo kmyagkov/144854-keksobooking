@@ -10,8 +10,8 @@
       return Math.floor(min + Math.random() * (max + 1 - min));
     },
     getRandomObjProp: function (obj) {
-      var arr = Object.keys(obj);
-      return arr[window.utils.getRandomInt(0, arr.length - 1)];
+      var keys = Object.keys(obj);
+      return keys[window.utils.getRandomInt(0, keys.length - 1)];
     },
     escEvent: function (evt, action) {
       if (evt.keyCode === ESC_KEYCODE) {
