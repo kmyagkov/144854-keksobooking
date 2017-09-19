@@ -43,7 +43,6 @@
     });
 
     return setFilterTypes(filterType.value, item.offer.type) &&
-    setFilterTypes(filterRooms.value, item.offer.rooms) &&
     setFilterPrice(filterPrice.value, item.offer.price) &&
     setFilterTypes(filterRooms.value, String(item.offer.rooms)) &&
     setFilterTypes(filterGuests.value, String(item.offer.guests)) &&

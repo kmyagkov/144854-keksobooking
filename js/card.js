@@ -2,12 +2,12 @@
 
 (function () {
 
-  var renderFeatures = function (array) {
+  var renderFeatures = function (features) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < array.length; i++) {
+    for (var i = 0; i < features.length; i++) {
       var container = document.createElement('span');
       container.className = 'feature__image';
-      container.classList.add('feature__image--' + array[i]);
+      container.classList.add('feature__image--' + features[i]);
       fragment.appendChild(container);
     }
     return fragment;

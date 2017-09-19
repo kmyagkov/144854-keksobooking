@@ -1,4 +1,6 @@
 body {
+    position: relative;
+
     background-color: #f0f0ea;
     margin: 0 auto;
     max-width: 1200px;
@@ -664,4 +666,21 @@ select option:hover {
 
 .rounded {
     border-radius: 50%;
+}
+
+.error-message {
+  position: fixed;
+  z-index: 999;
+  top: 200px;
+  left: 50%;
+  width: 540px;
+  background: url(http://img2.wikia.nocookie.net/__cb20140809161659/tannericus/images/c/cd/Famous-characters-Troll-face-Bad-Poker-Face-564817.png) 20px 20px no-repeat, #ED4545;
+  background-size: 50px 50px;
+  margin: auto;
+  padding: 20px 0 20px 30px;
+  margin-left: -270px;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 22px;
+  color: #fff;
 }

@@ -22,7 +22,7 @@
   };
   var CHECK_TIMES = ['12:00', '13:00', '14:00'];
   var FEATURES_ITEMS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-  var similarAdsTitles = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
+  var SIMILAR_ADS_TITLES = ['Большая уютная квартира', 'Маленькая неуютная квартира', 'Огромный прекрасный дворец', 'Маленький ужасный дворец', 'Красивый гостевой домик', 'Некрасивый негостеприимный домик', 'Уютное бунгало далеко от моря', 'Неуютное бунгало по колено в воде'];
 
   var getSimilarAds = function (titles, types, times, features, adsCount) {
     var array = [];
@@ -57,7 +57,7 @@
     return array;
   };
 
-  var similarAds = getSimilarAds(similarAdsTitles, HOUSING_TYPES, CHECK_TIMES, FEATURES_ITEMS, similarAdsTitles.length);
+  var similarAds = getSimilarAds(SIMILAR_ADS_TITLES, HOUSING_TYPES, CHECK_TIMES, FEATURES_ITEMS, SIMILAR_ADS_TITLES.length);
 
   window.data = {
     ads: similarAds,
